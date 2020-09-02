@@ -62,12 +62,23 @@ r_peaks = jqrs(ecg,HRVparams);
 % plot the detected r_peaks on the top of the ecg signal
 figure(1)
 hold on;
-plot(r_peaks./Fs, ecg(r_peaks),'o');
+plot(r_peaks./Fs, ecg(r_peaks),'o-'); %line up the detected peaks
 legend('ecg signal', 'detected R peaks')
 
 
+% estimate periodicity
+% refer to https://www.mathworks.com/help/signal/ug/find-periodicity-using-frequency-analysis.html
 
-
+figure(2)
+% compute the periodicity
+[pxx,f]=periodogram(ecg(r_peaks),[],[],Fs);
+% plot the periodogram
+plot(f,pxx)
+ax = gca;
+% set x-aixs limit
+ax.XLim = [1 4];
+xlabel('Frequency');
+ylabel('Magnitude');
 
 
 
